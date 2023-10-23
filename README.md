@@ -1,0 +1,4 @@
+
+#### Environment Variables
+
+MONGO_URL=mongodb://127.0.0.1:27017/?serverSelectionTimeoutMS=2000;MONGO_USERNAME=admin;MONGO_PASSWORD=r00t;MONGO_AUTH_DATABASE=admin;REDIS_PASSWORD=root;REDIS_PORT=6379

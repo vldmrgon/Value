@@ -1,1 +1,48 @@
-/data-team/src/main/java/com/my/pro/service/PurchaseService.java
+# IntelliJ IDEA
+.idea/
+
+# Compiled files
+*.class
+*.war
+*.ear
+*.jar
+
+# Dependencies (gradle-specific)
+.gradle/
+build/
+
+# Dependencies (maven-specific)
+target/
+lib/
+
+# Project-specific
+out/
+*.iml
+*.ipr
+*.iws
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+
+# User-specific files
+.idea_modules/
+.idea/libraries/
+
+# Editor-specific settings
+*.editorconfig
+*.sublime-workspace
+*.sublime-project
+
+# Local history
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+
+# Thumbs.db files
+Thumbs.db
+
+/data/docker/mongodb/db0/
+/data/docker/mongodb/db1/
+/data/docker/mongodb/db3/

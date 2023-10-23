@@ -20,7 +20,7 @@
         <module>effort-emulator</module>
         <module>e-commerce</module>
         <module>data-team</module>
-        <module>api</module>
+        <module>common</module>
     </modules>
 
     <properties>
@@ -50,6 +50,11 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
         <dependency>

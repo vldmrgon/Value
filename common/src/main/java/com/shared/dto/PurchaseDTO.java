@@ -6,9 +6,11 @@ import javax.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.redis.core.RedisHash;
 
 import java.util.Date;
 
+@RedisHash("Purchase")
 public class PurchaseDTO {
 
     @Setter

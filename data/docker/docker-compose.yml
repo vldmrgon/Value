@@ -1,0 +1,68 @@
+version: '3.4'
+networks:
+  mongodb-cluster:
+
+services:
+  mongodb-primary:
+    image: mongo:${MONGODB_VERSION}
+    container_name: mongodb1
+    command: "mongod --keyFile /mongodb/keyfile/key --replSet mongo-replica"
+    ports:
+     - ${MONGODB_SET1_PORT}:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
+    restart: unless-stopped
+    volumes:
+      - ./mongodb/keyfile/key:/mongodb/keyfile/key:ro
+      - ./mongodb/db1:/data/mongodb/db
+    networks:
+      - mongodb-cluster
+
+  mongodb-secondary-1:
+    image: mongo:${MONGODB_VERSION}
+    container_name: mongodb2
+    command: "mongod --keyFile /mongodb/keyfile/key --replSet mongo-replica"
+    ports:
+      - ${MONGODB_SET2_PORT}:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
+    restart: unless-stopped
+    volumes:
+      - ./mongodb/keyfile/key:/mongodb/keyfile/key:ro
+      - ./mongodb/db2:/data/mongodb/db
+    networks:
+      - mongodb-cluster
+
+  mongodb-secondary-2:
+    image: mongo:${MONGODB_VERSION}
+    container_name: mongodb3
+    command: "mongod --keyFile /mongodb/keyfile/key --replSet mongo-replica"
+    ports:
+      - ${MONGODB_SET3_PORT}:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
+    restart: unless-stopped
+    volumes:
+      - ./mongodb/keyfile/key:/mongodb/keyfile/key:ro
+      - ./mongodb/db3:/data/mongodb/db
+    networks:
+      - mongodb-cluster
+
+  mongo-setup:
+    image: mongo:${MONGODB_VERSION}
+    depends_on:
+      - mongodb-primary
+      - mongodb-secondary-1
+      - mongodb-secondary-2
+    restart: "no"
+    networks:
+      - mongodb-cluster
+    volumes:
+      - ./scripts:/scripts
+    environment:
+      DB_USERNAME: ${DB_MONGO_USERNAME}
+      DB_PASSWORD: ${DB_MONGO_PASSWORD}
+    entrypoint: ["bash", "-c", "sh ./scripts/mongo_init.sh"]

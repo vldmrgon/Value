@@ -1,7 +1,7 @@
 package com.my.pro.service;
 
 import com.my.pro.exception.ProductBusinessException;
-import com.my.pro.exception.ValidationException;
+import com.my.pro.exception.ValidationBusinessException;
 
 import com.my.pro.util.converter.ProductConverter;
 
@@ -38,7 +38,7 @@ public class ProductService {
     private void validateProduct(Product product) {
         String model = product.getModel();
         if (productRepository.existsByModel(model)) {
-            throw new ValidationException("The product with the model: " + model + " already exists");
+            throw new ValidationBusinessException("The product with the model: " + model + " already exists");
         }
     }
 }
