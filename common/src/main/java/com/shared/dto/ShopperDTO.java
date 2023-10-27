@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 public class ShopperDTO {
 
     @Setter
@@ -26,7 +28,7 @@ public class ShopperDTO {
     @Setter
     @Getter
     @Builder
-    public static class Response {
+    public static class Response implements Serializable{
         @NotNull
         private String id;
         @Email

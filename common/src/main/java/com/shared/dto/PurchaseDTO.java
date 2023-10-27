@@ -3,14 +3,14 @@ package com.shared.dto;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.data.redis.core.RedisHash;
+import java.io.Serializable;
 
 import java.util.Date;
 
-@RedisHash("Purchase")
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
 public class PurchaseDTO {
 
     @Setter

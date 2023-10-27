@@ -33,7 +33,8 @@ public class PurchaseService {
     private final ProductRepository productRepository;
     private final PurchaseConverter purchaseConverter;
     private final RedisService redisService;
-//
+
+    //
 //    @Transactional
     public PurchaseDTO.Response addPurchase(ShopperDTO.Request shopper, ProductDTO.Request product) {
 
@@ -56,8 +57,8 @@ public class PurchaseService {
 
         PurchaseDTO.Response response = purchaseConverter.mapEntityToResponse(purchaseEntity);
 
-//        redisService.setProductByEmailShopper(response.getShopper().getEmail(), response.getProduct());
-//        redisService.setShopperByModelProduct(response.getProduct().getModel(), response.getShopper());
+        redisService.setProductByEmailShopper(response.getShopper().getEmail(), response.getProduct());
+        redisService.setShopperByModelProduct(response.getProduct().getModel(), response.getShopper());
 
         return response;
     }

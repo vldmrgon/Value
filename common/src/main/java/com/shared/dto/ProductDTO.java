@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 public class ProductDTO {
 
     @Setter
@@ -27,7 +29,7 @@ public class ProductDTO {
     @Setter
     @Getter
     @Builder
-    public static class Response {
+    public static class Response implements Serializable {
         @NotNull
         private String id;
         @NotNull
