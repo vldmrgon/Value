@@ -1,9 +1,7 @@
 package com.my.pro.util.converter;
 
 import org.springframework.stereotype.Component;
-
 import com.my.pro.domain.entity.Shopper;
-
 import com.shared.dto.ShopperDTO;
 
 @Component

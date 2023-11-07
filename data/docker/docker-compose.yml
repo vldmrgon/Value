@@ -80,6 +80,22 @@ services:
       DB_PASSWORD: ${MONGODB_PASSWORD}
     entrypoint: [ "bash", "-c", "sh ./scripts/mongo_init.sh" ]
 
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: rediscommander/redis-commander:latest
+    environment:
+      REDIS_HOST: redis-master
+      REDIS_PASSWORD: ${REDIS_MASTER_PASSWORD}
+    ports:
+      - 8081:8081
+    depends_on:
+      - redis-master
+    restart:
+      unless-stopped
+    networks:
+      - data-cluster
+
   redis-master:
     image: redis:${REDIS_VERSION}
     container_name: redis-master

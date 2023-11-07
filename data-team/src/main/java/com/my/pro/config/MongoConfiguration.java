@@ -1,55 +1,51 @@
 package com.my.pro.config;
 
-import com.mongodb.client.MongoClient;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import org.springframework.transaction.PlatformTransactionManager;
-
+import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
 import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Bean;
-
 import org.springframework.beans.factory.annotation.Value;
-
-import com.mongodb.client.MongoClients;
-import com.mongodb.MongoClientSettings;
-import com.mongodb.ConnectionString;
-import com.mongodb.MongoCredential;
+import org.springframework.context.annotation.Bean;
 
 @Configuration
 @EnableMongoRepositories(basePackages = "com.my.pro.repository")
 public class MongoConfiguration {
 
     @Value("${spring.data.mongodb.authentication-database}")
-    private String database;
+    private String mongoDatabase;
 
     @Value("${spring.data.mongodb.username}")
-    private String username;
+    private String mongoUsername;
 
     @Value("${spring.data.mongodb.password}")
-    private char[] password;
+    private String mongoPassword;
 
-    @Value("${spring.data.mongodb.uri}")
-    private String mongoUri;
+    @Value("${spring.data.mongodb.host}")
+    private String mongoHost;
+
+    @Value("${spring.mongo.port}")
+    private int mongoPort;
+
+    @Bean
+    public MongoDatabaseFactory mongoDatabaseFactory() {
+        String mongoUri = createMongoUri(mongoUsername, mongoPassword, mongoHost, mongoPort, mongoDatabase);
+        return new SimpleMongoClientDatabaseFactory(mongoUri);
+    }
 
     @Bean
     public MongoTemplate mongoTemplate() {
-        MongoCredential credential = MongoCredential.createCredential(username, database, password);
-        ConnectionString connectionString = new ConnectionString(mongoUri);
-
-        MongoClientSettings settings = MongoClientSettings.builder()
-                .applyConnectionString(connectionString)
-                .credential(credential)
-                .build();
-
-        MongoClient mongoClient = MongoClients.create(settings);
-        return new MongoTemplate(mongoClient, database);
+        return new MongoTemplate(mongoDatabaseFactory());
     }
-//
-//    @Bean
-//    public PlatformTransactionManager transactionManager(MongoDatabaseFactory dbFactory) {
-//        return new MongoTransactionManager(dbFactory);
-//    }
+
+    @Bean
+    public MongoTransactionManager mongoTransactionManager(MongoDatabaseFactory mongoDatabaseFactory) {
+        return new MongoTransactionManager(mongoDatabaseFactory);
+    }
+
+    private String createMongoUri(String username, String password, String host, int port, String databaseName) {
+        return "mongodb://" + username + ":" + password + "@" + host + ":" + port + "/" + databaseName;
+    }
 }

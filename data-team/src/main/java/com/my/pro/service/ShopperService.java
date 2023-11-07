@@ -1,20 +1,17 @@
 package com.my.pro.service;
 
-import com.my.pro.exception.ShopperBusinessException;
 import com.my.pro.exception.ValidationBusinessException;
+import com.my.pro.exception.ShopperBusinessException;
 
 import com.my.pro.util.converter.ShopperConverter;
-
 import com.my.pro.repository.ShopperRepository;
-
-import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import com.my.pro.domain.entity.Shopper;
+import com.shared.dto.ShopperDTO;
 
 import lombok.RequiredArgsConstructor;
-
-import com.shared.dto.ShopperDTO;
+import lombok.SneakyThrows;
 
 @Service
 @RequiredArgsConstructor

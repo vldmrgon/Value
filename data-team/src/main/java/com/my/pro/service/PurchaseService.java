@@ -4,13 +4,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.my.pro.exception.PurchaseBusinessException;
-
 import com.my.pro.util.converter.PurchaseConverter;
 
 import com.my.pro.repository.PurchaseRepository;
 import com.my.pro.repository.ProductRepository;
 import com.my.pro.repository.ShopperRepository;
-
 
 import com.my.pro.domain.entity.Purchase;
 import com.my.pro.domain.entity.Product;
@@ -34,8 +32,7 @@ public class PurchaseService {
     private final PurchaseConverter purchaseConverter;
     private final RedisService redisService;
 
-    //
-//    @Transactional
+    @Transactional
     public PurchaseDTO.Response addPurchase(ShopperDTO.Request shopper, ProductDTO.Request product) {
 
         String email = shopper.getEmail();

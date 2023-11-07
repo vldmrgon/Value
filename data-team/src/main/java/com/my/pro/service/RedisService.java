@@ -1,26 +1,40 @@
 package com.my.pro.service;
 
+import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import lombok.RequiredArgsConstructor;
+import javax.annotation.PostConstruct;
+import lombok.extern.log4j.Log4j2;
 
 import com.shared.dto.ProductDTO;
 import com.shared.dto.ShopperDTO;
 
+@Log4j2
 @Service
-@RequiredArgsConstructor
 public class RedisService {
 
-    private final RedisTemplate<String, Object> redisTemplate;
+    @Getter
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
+    private ListOperations<String, Object> listOperations;
+
+    @PostConstruct
+    public void initListOps() {
+        listOperations = redisTemplate.opsForList();
+    }
 
     public void setProductByEmailShopper(String email, ProductDTO.Response product) {
         String key = "productsByShopper:" + email;
-        redisTemplate.opsForValue().set(key, product);
+        listOperations.rightPush(key, product);
+        log.debug("The product ID: " + product.getId() + " was added");
     }
 
     public void setShopperByModelProduct(String model, ShopperDTO.Response shopper) {
         String key = "shoppersByProduct:" + model;
-        redisTemplate.opsForValue().set(key, shopper);
+        listOperations.rightPush(key, shopper);
+        log.debug("The shopper ID: " + shopper.getId() + " was added");
     }
 }
