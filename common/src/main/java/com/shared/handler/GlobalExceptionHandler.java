@@ -1,13 +1,13 @@
-package com.my.pro.handler;
+package com.shared.handler;
 
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.my.pro.exception.ValidationBusinessException;
-import com.my.pro.exception.PurchaseBusinessException;
-import com.my.pro.exception.ShopperBusinessException;
-import com.my.pro.exception.ProductBusinessException;
+import com.shared.exception.ValidationBusinessException;
+import com.shared.exception.PurchaseBusinessException;
+import com.shared.exception.ShopperBusinessException;
+import com.shared.exception.ProductBusinessException;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;

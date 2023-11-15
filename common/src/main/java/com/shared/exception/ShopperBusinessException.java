@@ -1,4 +1,4 @@
-package com.my.pro.exception;
+package com.shared.exception;
 
 public class ShopperBusinessException extends RuntimeException {
 

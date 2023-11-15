@@ -4,7 +4,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import java.io.Serializable;
-
 import java.util.Date;
 
 import lombok.Builder;
@@ -26,7 +25,7 @@ public class PurchaseDTO {
     @Setter
     @Getter
     @Builder
-    public static class Response {
+    public static class Response implements Serializable {
         @NotNull
         private String id;
         @NotNull

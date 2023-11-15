@@ -1,7 +1,7 @@
 package com.my.pro.service;
 
-import com.my.pro.exception.ValidationBusinessException;
-import com.my.pro.exception.ShopperBusinessException;
+import com.shared.exception.ValidationBusinessException;
+import com.shared.exception.ShopperBusinessException;
 
 import com.my.pro.util.converter.ShopperConverter;
 import com.my.pro.repository.ShopperRepository;

@@ -1,6 +1,5 @@
 package com.my.pro.service;
 
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -8,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import lombok.extern.log4j.Log4j2;
+import lombok.Getter;
 
 import com.shared.dto.ProductDTO;
 import com.shared.dto.ShopperDTO;
@@ -28,13 +28,13 @@ public class RedisService {
 
     public void setProductByEmailShopper(String email, ProductDTO.Response product) {
         String key = "productsByShopper:" + email;
-        listOperations.rightPush(key, product);
+        Long aLong = listOperations.rightPush(key, product);
         log.debug("The product ID: " + product.getId() + " was added");
     }
 
     public void setShopperByModelProduct(String model, ShopperDTO.Response shopper) {
         String key = "shoppersByProduct:" + model;
-        listOperations.rightPush(key, shopper);
+        Long aLong = listOperations.rightPush(key, shopper);
         log.debug("The shopper ID: " + shopper.getId() + " was added");
     }
 }

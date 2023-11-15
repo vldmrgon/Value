@@ -3,7 +3,7 @@ package com.my.pro.service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
-import com.my.pro.exception.PurchaseBusinessException;
+import com.shared.exception.PurchaseBusinessException;
 import com.my.pro.util.converter.PurchaseConverter;
 
 import com.my.pro.repository.PurchaseRepository;
