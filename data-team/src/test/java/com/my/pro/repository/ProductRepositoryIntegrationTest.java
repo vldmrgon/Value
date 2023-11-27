@@ -9,7 +9,7 @@ import com.my.pro.domain.entity.Product;
 import org.junit.jupiter.api.*;
 
 @DataMongoTest
-public class ProductRepositoryTest {
+public class ProductRepositoryIntegrationTest {
 
     @Autowired
     private ProductRepository productRepository;

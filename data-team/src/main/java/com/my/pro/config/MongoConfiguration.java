@@ -45,7 +45,7 @@ public class MongoConfiguration {
         return new MongoTransactionManager(mongoDatabaseFactory);
     }
 
-    private String createMongoUri(String username, String password, String host, int port, String databaseName) {
+    public String createMongoUri(String username, String password, String host, int port, String databaseName) {
         return "mongodb://" + username + ":" + password + "@" + host + ":" + port + "/" + databaseName;
     }
 }

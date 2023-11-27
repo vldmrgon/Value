@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Date;
 
 @DataMongoTest
-public class PurchaseRepositoryTest {
+public class PurchaseRepositoryIntegrationTest {
 
     @Autowired
     private PurchaseRepository purchaseRepository;
