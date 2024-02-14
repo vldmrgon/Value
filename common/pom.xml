@@ -11,9 +11,6 @@
     </parent>
 
     <artifactId>common</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
 
-    <properties>
-        <maven.compiler.source>13</maven.compiler.source>
-        <maven.compiler.target>13</maven.compiler.target>
-    </properties>
 </project>

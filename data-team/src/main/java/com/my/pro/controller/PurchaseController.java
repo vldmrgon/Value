@@ -22,6 +22,6 @@ public class PurchaseController {
     @PostMapping("/purchase/create")
     public ResponseEntity<PurchaseDTO.Response> createPurchase(@RequestBody PurchaseDTO.Request request) {
         PurchaseDTO.Response response = purchaseService.addPurchase(request.getShopper(), request.getProduct());
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

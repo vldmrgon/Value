@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.my.pro.domain.entity.Product;
+import com.my.pro.objects.Mocks;
 import org.junit.jupiter.api.*;
 
 @DataMongoTest
@@ -17,7 +18,7 @@ public class ProductRepositoryIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        product = Product.builder().category("Electric").brand("Sony").build();
+        product = Mocks.PRODUCT;
     }
 
     @AfterEach
@@ -35,8 +36,8 @@ public class ProductRepositoryIntegrationTest {
     void shouldGetProduct() {
         productRepository.save(product);
         var savedProduct = productRepository.findById(product.getId()).get();
-        assertThat(savedProduct.getCategory()).isEqualTo("Electric");
-        assertThat(savedProduct.getBrand()).isEqualTo("Sony");
+        assertThat(savedProduct.getCategory()).isEqualTo(Mocks.PRODUCT_CATEGORY);
+        assertThat(savedProduct.getBrand()).isEqualTo(Mocks.PRODUCT_BRAND);
     }
 
     @Test

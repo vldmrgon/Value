@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 
+import java.util.Arrays;
+
 @Configuration
 @EnableMongoRepositories(basePackages = "com.my.pro.repository")
 public class MongoConfiguration {
@@ -21,7 +23,7 @@ public class MongoConfiguration {
     private String mongoUsername;
 
     @Value("${spring.data.mongodb.password}")
-    private String mongoPassword;
+    private char[] mongoPassword;
 
     @Value("${spring.data.mongodb.host}")
     private String mongoHost;
@@ -31,8 +33,9 @@ public class MongoConfiguration {
 
     @Bean
     public MongoDatabaseFactory mongoDatabaseFactory() {
-        String mongoUri = createMongoUri(mongoUsername, mongoPassword, mongoHost, mongoPort, mongoDatabase);
-        return new SimpleMongoClientDatabaseFactory(mongoUri);
+        return new SimpleMongoClientDatabaseFactory(
+                createMongoUri(mongoUsername, mongoPassword, mongoHost, mongoPort, mongoDatabase)
+        );
     }
 
     @Bean
@@ -45,7 +48,7 @@ public class MongoConfiguration {
         return new MongoTransactionManager(mongoDatabaseFactory);
     }
 
-    public String createMongoUri(String username, String password, String host, int port, String databaseName) {
-        return "mongodb://" + username + ":" + password + "@" + host + ":" + port + "/" + databaseName;
+    public String createMongoUri(String username, char[] password, String host, int port, String databaseName) {
+        return "mongodb://" + username + ":" + Arrays.toString(password) + "@" + host + ":" + port + "/" + databaseName;
     }
 }

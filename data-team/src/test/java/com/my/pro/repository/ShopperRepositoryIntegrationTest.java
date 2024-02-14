@@ -4,12 +4,13 @@ import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import com.my.pro.domain.entity.Shopper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+
+import com.my.pro.objects.Mocks;
 
 @DataMongoTest
 public class ShopperRepositoryIntegrationTest {
@@ -20,7 +21,7 @@ public class ShopperRepositoryIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        shopper = Shopper.builder().email("test@example.com").build();
+        shopper = Shopper.builder().email(Mocks.SHOPPER_EMAIL).build();
     }
 
     @AfterEach
@@ -38,7 +39,7 @@ public class ShopperRepositoryIntegrationTest {
     void shouldGetShopper() {
         shopperRepository.save(shopper);
         var savedShopper = shopperRepository.findById(shopper.getId()).get();
-        assertThat(savedShopper.getEmail()).isEqualTo("test@example.com");
+        assertThat(savedShopper.getEmail()).isEqualTo(Mocks.SHOPPER_EMAIL);
     }
 
     @Test

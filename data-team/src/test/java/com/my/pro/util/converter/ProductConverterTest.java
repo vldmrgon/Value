@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import com.my.pro.domain.entity.Product;
 import com.shared.dto.ProductDTO;
 
+import com.my.pro.objects.Mocks;
+
 @ExtendWith(MockitoExtension.class)
 public class ProductConverterTest {
 
@@ -18,7 +20,7 @@ public class ProductConverterTest {
 
     @Test
     public void testMapRequestToEntity() {
-        ProductDTO.Request request = new ProductDTO.Request("123", "Laptop", "Electronics");
+        ProductDTO.Request request = Mocks.REQUEST_PRODUCT_DTO;
         Product productEntity = productConverter.mapRequestToEntity(request);
 
         Assertions.assertEquals(request.getModel(), productEntity.getModel());
@@ -28,7 +30,7 @@ public class ProductConverterTest {
 
     @Test
     public void testMapEntityToResponse() {
-        Product productEntity = new Product("456", "Laptop", "Electronics", "BrandX");
+        Product productEntity = Mocks.PRODUCT;
         ProductDTO.Response responseDTO = productConverter.mapEntityToResponse(productEntity);
 
         Assertions.assertEquals(productEntity.getId(), responseDTO.getId());
