@@ -24,94 +24,48 @@ import com.shared.dto.PurchaseDTO;
 import com.shared.dto.ProductDTO;
 import com.shared.dto.ShopperDTO;
 
+import com.my.pro.objects.Mocks;
+
 import java.util.Optional;
-import java.util.Date;
 
 @ExtendWith(MockitoExtension.class)
 public class PurchaseServiceTest {
 
     @Mock
     private PurchaseRepository purchaseRepository;
-
     @Mock
     private ShopperRepository shopperRepository;
-
     @Mock
     private ProductRepository productRepository;
-
     @Mock
     private PurchaseConverter purchaseConverter;
-
     @InjectMocks
     private PurchaseService purchaseService;
-
     @Mock
     private RedisService redisService;
 
     @Test
     public void testAddPurchase() {
-        ShopperDTO.Request shopperRequest = ShopperDTO.Request.builder()
-                .email("test@email.com")
-                .firstName("John")
-                .lastName("Doe")
-                .build();
+        ShopperDTO.Request shopperRequest = Mocks.REQUEST_SHOPPER_DTO;
+        ProductDTO.Request productRequest = Mocks.REQUEST_PRODUCT_DTO;
 
-        ProductDTO.Request productRequest = ProductDTO.Request.builder()
-                .model("Laptop")
-                .category("Electronics")
-                .brand("BrandX")
-                .build();
-
-        Shopper shopperEntity = Shopper.builder()
-                .id("123")
-                .email("test@email.com")
-                .firstName("John")
-                .lastName("Doe")
-                .build();
-
-        Product productEntity = Product.builder()
-                .id("456")
-                .model("Laptop")
-                .category("Electronics")
-                .brand("BrandX")
-                .build();
+        Purchase purchaseEntity = Mocks.PURCHASE;
+        Shopper shopperEntity = Mocks.SHOPPER;
+        Product productEntity = Mocks.PRODUCT;
 
         Mockito.
-                when(shopperRepository.findByEmail("test@email.com"))
+                when(shopperRepository.findByEmail(Mocks.SHOPPER_EMAIL))
                 .thenReturn(Optional.of(shopperEntity));
-        Mockito.
-                when(productRepository.findByModel("Laptop"))
-                .thenReturn(Optional.of(productEntity));
 
-        Purchase purchaseEntity = Purchase.builder()
-                .id("789")
-                .purchaseDate(new Date())
-                .shopper(shopperEntity)
-                .product(productEntity)
-                .build();
+        Mockito.
+                when(productRepository.findByModel(Mocks.PRODUCT_MODEL))
+                .thenReturn(Optional.of(productEntity));
 
         Mockito.
                 when(purchaseRepository.save(ArgumentMatchers.any()))
                 .thenReturn(purchaseEntity);
 
-        PurchaseDTO.Response responseDTO = PurchaseDTO.Response.builder()
-                .id("789")
-                .purchaseDate(new Date())
-                .shopper(ShopperDTO.Response.builder()
-                        .id("123")
-                        .email("test@email.com")
-                        .firstName("John")
-                        .lastName("Doe")
-                        .build()
-                )
-                .product(ProductDTO.Response.builder()
-                        .id("456")
-                        .model("Laptop")
-                        .category("Electronics")
-                        .brand("BrandX")
-                        .build()
-                )
-                .build();
+        PurchaseDTO.Response responseDTO = Mocks.RESPONSE_PURCHASE_DTO;
 
         Mockito
                 .when(purchaseConverter.mapEntityToResponse(purchaseEntity))
@@ -119,15 +73,15 @@ public class PurchaseServiceTest {
 
         PurchaseDTO.Response result = purchaseService.addPurchase(shopperRequest, productRequest);
 
-        Assertions.assertEquals("789", result.getId());
-        Assertions.assertEquals("test@email.com", result.getShopper().getEmail());
-        Assertions.assertEquals("Laptop", result.getProduct().getModel());
+        Assertions.assertEquals(Mocks.ID, result.getId());
+        Assertions.assertEquals(Mocks.SHOPPER_EMAIL, result.getShopper().getEmail());
+        Assertions.assertEquals(Mocks.PRODUCT_MODEL, result.getProduct().getModel());
 
-        Mockito.verify(shopperRepository, Mockito.times(1)).findByEmail("test@email.com");
-        Mockito.verify(productRepository, Mockito.times(1)).findByModel("Laptop");
+        Mockito.verify(shopperRepository, Mockito.times(1)).findByEmail(Mocks.SHOPPER_EMAIL);
+        Mockito.verify(productRepository, Mockito.times(1)).findByModel(Mocks.PRODUCT_MODEL);
         Mockito.verify(purchaseRepository, Mockito.times(1)).save(ArgumentMatchers.any());
         Mockito.verify(purchaseConverter, Mockito.times(1)).mapEntityToResponse(purchaseEntity);
-        Mockito.verify(redisService, Mockito.times(1)).setProductByEmailShopper("test@email.com", result.getProduct());
-        Mockito.verify(redisService, Mockito.times(1)).setShopperByModelProduct("Laptop", result.getShopper());
+        Mockito.verify(redisService, Mockito.times(1)).setProductByEmailShopper(Mocks.SHOPPER_EMAIL, result.getProduct());
+        Mockito.verify(redisService, Mockito.times(1)).setShopperByModelProduct(Mocks.PRODUCT_MODEL, result.getShopper());
     }
 }

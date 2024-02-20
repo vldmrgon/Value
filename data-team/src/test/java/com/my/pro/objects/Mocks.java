@@ -1,6 +1,5 @@
 package com.my.pro.objects;
 
-
 import com.my.pro.domain.entity.Purchase;
 import com.my.pro.domain.entity.Product;
 import com.my.pro.domain.entity.Shopper;
@@ -16,16 +15,16 @@ import java.util.Date;
 @UtilityClass
 public class Mocks {
 
-    public static String SHOPPER_EMAIL = "test@example.com";
-    public static String SHOPPER_FIRST_NAME = "first-name";
-    public static String SHOPPER_LAST_NAME = "last-name";
+    public String SHOPPER_EMAIL = "test@example.com";
+    public String SHOPPER_FIRST_NAME = "first-name";
+    public String SHOPPER_LAST_NAME = "last-name";
 
-    public static String PRODUCT_CATEGORY = "test-category";
-    public static String PRODUCT_MODEL = "test-model";
-    public static String PRODUCT_BRAND = "test-brand";
+    public String PRODUCT_CATEGORY = "test-category";
+    public String PRODUCT_MODEL = "test-model";
+    public String PRODUCT_BRAND = "test-brand";
 
-    public static Date DATE = new Date();
-    public static String ID = "id";
+    public Date DATE = new Date();
+    public String ID = "id";
 
     public ProductDTO.Request REQUEST_PRODUCT_DTO;
     public ProductDTO.Response RESPONSE_PRODUCT_DTO;
